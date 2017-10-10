@@ -20,6 +20,7 @@
 \usepackage{bold-extra}
 \usepackage{minted}
 \usepackage[thicklines]{cancel}
+\usepackage{setspace}
 
 \xdefinecolor{dianablue}{rgb}{0.18,0.24,0.31}
 \xdefinecolor{darkblue}{rgb}{0.1,0.1,0.7}
@@ -103,7 +104,7 @@ No ATLAS files because I can't generate new ones or {\tt TTree::CopyTree} old on
 \end{center}
 \end{frame}
 
-\begin{frame}{But it's faster: level 1--3 are as fast as writing uncompressed}
+\begin{frame}{But it's faster: levels 1--3 are as fast as writing uncompressed}
 \vspace{0.1 cm}
 \begin{center}
 \includegraphics[width=0.9\linewidth]{write-vs-compression.png}
@@ -124,7 +125,7 @@ No ATLAS files because I can't generate new ones or {\tt TTree::CopyTree} old on
 \end{center}
 \end{frame}
 
-\begin{frame}{See speed vs.\ size trade-off on a plane}
+\begin{frame}{Speed vs.\ size trade-offs}
 \vspace{0.5 cm}
 \begin{columns}
 \column{0.33\linewidth}
@@ -166,7 +167,8 @@ TBranches for variable-sized data contain offsets indicating where each entry st
 \vspace{0.5 cm}
 \begin{center}
 \begin{minipage}{0.7\linewidth}
-My study predated (inspired) this PR; I constructed a copy of NanoAOD without offsets by putting all muon data into a flat TTree, all jet data into a flat TTree, etc.
+\setstretch{1.25}
+My study pre-dated (inspired) this PR; I constructed a copy of NanoAOD without offsets by putting all muon data into a flat TTree, all jet data into a flat TTree, etc.
 \end{minipage}
 \end{center}
 \end{frame}
@@ -187,13 +189,13 @@ My study predated (inspired) this PR; I constructed a copy of NanoAOD without of
 \end{frame}
 
 \begin{frame}{Do offsets vs.\ counts matter? Yes for LZ4.}
-\vspace{0.25 cm}
+\vspace{0.5 cm}
 \begin{columns}
-\column{0.9\linewidth}
-\includegraphics[width=\linewidth]{offsets-vs-counts.png}
-
 \column{0.2\linewidth}
-Synthetic test: generated Poisson-random counts and integrated them to make offsets, ZLIB and LZ4 compressed them.
+\textcolor{darkblue}{\underline{Synthetic test:}} \\ \vspace{0.1 cm} I generated Poisson-random counts and integrated them to make offsets, then ZLIB and LZ4 compressed them.
+
+\column{0.85\linewidth}
+\includegraphics[width=\linewidth]{offsets-vs-counts.png}
 \end{columns}
 \end{frame}
 
@@ -207,7 +209,7 @@ LZ4 is as fast as uncompressed data for traditional {\tt GetEntry} jobs.
 BulkIO is an order of magnitude faster than {\tt GetEntry}, especially with LZ4.
 
 \vspace{0.5 cm}
-Unnecessary offsets add 8--18\% to file size; may be removed.
+Unnecessary offsets add $\sim$10\% to file size; may be removed.
 
 \vspace{0.5 cm}
 Counts compress better than offsets, especially for LZ4.
