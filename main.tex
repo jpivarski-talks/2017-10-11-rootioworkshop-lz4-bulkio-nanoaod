@@ -148,6 +148,12 @@ No ATLAS files because I can't generate new ones or {\tt TTree::CopyTree} old on
 \end{columns}
 \end{frame}
 
+\begin{frame}{}
+\begin{center}
+\textcolor{blue}{\Huge Oksana's content here!}
+\end{center}
+\end{frame}
+
 \begin{frame}{Removing unnecessary offsets}
 \vspace{0.5 cm}
 TBranches for variable-sized data contain offsets indicating where each entry starts.
@@ -180,9 +186,33 @@ My study predated (inspired) this PR; I constructed a copy of NanoAOD without of
 \end{center}
 \end{frame}
 
+\begin{frame}{Do offsets vs.\ counts matter? Yes for LZ4.}
+\vspace{0.25 cm}
+\begin{columns}
+\column{0.9\linewidth}
+\includegraphics[width=\linewidth]{offsets-vs-counts.png}
 
+\column{0.2\linewidth}
+Synthetic test: generated Poisson-random counts and integrated them to make offsets, ZLIB and LZ4 compressed them.
+\end{columns}
+\end{frame}
 
+\begin{frame}{Conclusions}
+\vspace{0.5 cm}
+\begin{center}
+\begin{minipage}{0.88\linewidth}
+LZ4 is as fast as uncompressed data for traditional {\tt GetEntry} jobs.
 
+\vspace{0.5 cm}
+BulkIO is an order of magnitude faster than {\tt GetEntry}, especially with LZ4.
 
+\vspace{0.5 cm}
+Unnecessary offsets add 8--18\% to file size; may be removed.
+
+\vspace{0.5 cm}
+Counts compress better than offsets, especially for LZ4.
+\end{minipage}
+\end{center}
+\end{frame}
 
 \end{document}
